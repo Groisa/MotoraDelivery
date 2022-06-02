@@ -1,9 +1,11 @@
-
-
+import { Routes, Route } from 'react-router-dom'
 function App() {
   return (
-    <p>oii</p>
+    <Routes>
+      <Route/>
+    </Routes>
   );
 }
 
 export default App;
+
