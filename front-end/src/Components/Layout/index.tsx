@@ -9,7 +9,7 @@ export const Layout: React.FC<Props> = ( { children } ) => {
     return (
         <>
             <Header/>
-            <MainStyled className="vh-100">
+            <MainStyled className="h-100">
                 { children }    
             </MainStyled> 
             <Footer/>

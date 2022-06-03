@@ -56,10 +56,12 @@ export function Header() {
                         </NavOffCanvasFooter>
                     </Offcanvas.Body>
                 </Navbar.Offcanvas>
-                <Navbar.Brand as={Link} to='/'></Navbar.Brand>
-                <StyledCompleNav>
-                    <FaUserCircle />
-                </StyledCompleNav>
+                <Navbar.Brand as={Link} to='/'>
+                    <StyledCompleNav>
+                        <FaUserCircle />
+                        <BottonStyled variant='light'>Cadastre-se</BottonStyled>
+                    </StyledCompleNav>
+                </Navbar.Brand>
             </Container>
         </Navbar>
 
@@ -71,8 +73,11 @@ const LogoLgWindow = styled.div`
         display: block;
     }
 `
+const BottonStyled = styled(Button)`
+    margin-left: 10px;
+`
 const StyledCompleNav = styled.div`
-    color: #fff;
+        color: #fff;
         font-size: 30px;
     @media(min-width: 992px) {
         display:none;
@@ -107,5 +112,6 @@ const DivNavLink = styled.div`
     @media(min-width: 992px) {
         color: white;
         margin-left: 10px;
+        font-size: 20px;
     }
 `
