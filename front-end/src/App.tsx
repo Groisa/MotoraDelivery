@@ -1,8 +1,9 @@
 import { Routes, Route } from 'react-router-dom'
+import { HomeView } from './Views/HomeView';
 function App() {
   return (
     <Routes>
-      <Route/>
+      <Route path='/' element={<HomeView/>}/>
     </Routes>
   );
 }
