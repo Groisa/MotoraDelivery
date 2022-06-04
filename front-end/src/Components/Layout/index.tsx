@@ -17,5 +17,8 @@ export const Layout: React.FC<Props> = ( { children } ) => {
     )
 }
 const MainStyled = styled.main`
-    padding-top: 120px;
+    padding-top: 70px;
+    @media(min-width: 992px) {
+        padding-top: 85px;
+    }
 `

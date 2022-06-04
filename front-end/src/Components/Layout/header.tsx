@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import letraLogo from '../../img/letrasPreta.png'
 import logo from '../../img/Logo.png'
-import { FaUserCircle } from 'react-icons/fa';
+import { FaUserCircle, FaHome, FaAddressCard } from 'react-icons/fa';
 export function Header() {
     return (
         <Navbar expand='lg' fixed='top' bg='dark' variant="dark">
@@ -27,16 +27,19 @@ export function Header() {
                             <Nav.Link as={Link} to='/'>
                                 <DivNavLink>
                                     <span>Menu Incial</span>
+                                    <FaHome/>
                                 </DivNavLink>
                             </Nav.Link >
                             <Nav.Link as={Link} to='/login'>
                                 <DivNavLink>
                                     <span>Login</span>
+                                    <FaUserCircle />
                                 </DivNavLink>
                             </Nav.Link>
                             <Nav.Link as={Link} to='/login'>
                                 <DivNavLink>
                                     <span>Cadastro</span>
+                                    <FaAddressCard/>
                                 </DivNavLink>
                             </Nav.Link>
                         </Nav>
@@ -104,11 +107,15 @@ const DivOffCanvasFotter = styled.div`
     }
 `
 const DivNavLink = styled.div`
+    display: flex;
+    align-items: center;
     text-decoration: none;
     color: black;
     font-size: 25px;
     padding-top: 10px;
-    text-align: center;
+    span {
+        padding-right: 5px;
+    }
     @media(min-width: 992px) {
         color: white;
         margin-left: 10px;

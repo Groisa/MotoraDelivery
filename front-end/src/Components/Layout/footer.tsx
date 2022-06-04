@@ -8,14 +8,6 @@ export function Footer() {
         <footer>
             <StyledNavBar bg='dark' variant='dark'>
                 <img src={logo} width={110} alt='logo fox entregas' />
-                <div className='d-flex pt-2'>
-                    <Nav.Link as={Link} to='/'>
-                        <p>Perguntas</p>
-                    </Nav.Link>
-                    <Nav.Link as={Link} to='/'>
-                        <p>Saiba mais</p>
-                    </Nav.Link>
-                </div>
                 <DivStyled>
                     <Nav.Link as={Link} to='/'>
                         <p>Login</p>
