@@ -1,4 +1,4 @@
-import { Accordion, Button, Card, Container } from "react-bootstrap";
+import { Accordion, Button, Card, Container, Nav } from "react-bootstrap";
 import styled from "styled-components";
 import { Layout } from "../../Components/Layout";
 import BackGround from '../../img/backgroundMoto.jpg'
@@ -6,6 +6,7 @@ import { FaWifi, FaShoppingBag } from "react-icons/fa";
 import BackGround2 from '../../img/backgroundMoto2.jpg'
 import MotoBoyCard1 from '../../img/CardMotoboy.jpg'
 import MotoBoyCard2 from '../../img/CardMoto2.jpg'
+import { Link } from "react-router-dom";
 export function HomeView() {
     return (
         <Layout>
@@ -26,7 +27,9 @@ export function HomeView() {
                         <Accordion.Body>
                             <h1>Entregue e ganhe</h1>
                             <p>Ofereça entregas de alta qualidade com o rendimento que você merece!</p>
-                            <Button variant='dark'>Cadastre-se para entregar</Button>
+                            <Nav.Link as={Link} to='/cadastro-motora'>
+                                <Button variant='dark'>Cadastre-se para entregar</Button>
+                            </Nav.Link>
                         </Accordion.Body>
                     </Accordion.Item>
                     <Accordion.Item eventKey="1">
@@ -39,7 +42,9 @@ export function HomeView() {
                         <Accordion.Body>
                             <h1>Receba sem sair de casa</h1>
                             <p>Receba e envie entregas no conforto de sua casa com preço justo e qualidade</p>
-                            <Button variant='dark'>Solicite agora</Button>
+                            <Nav.Link as={Link} to='/cadastro-usuario'>
+                                <Button variant='dark'>Solicite agora</Button>
+                            </Nav.Link>
                         </Accordion.Body>
                     </Accordion.Item>
                 </Accordion>
@@ -67,7 +72,7 @@ export function HomeView() {
                                 <Card.Body>
                                     <Card.Title>Para você empresa movimentamos seu negocio</Card.Title>
                                     <Card.Text>
-                                       Inovando sempre na forma de transporte disponibilizamos o que atualmente se tornou dificil de conseguir transporte rapido eficiente e com qualidade para sua empresa!
+                                        Inovando sempre na forma de transporte disponibilizamos o que atualmente se tornou dificil de conseguir transporte rapido eficiente e com qualidade para sua empresa!
                                     </Card.Text>
                                 </Card.Body>
                             </Card>
