@@ -28,3 +28,10 @@ export const ButtonFormUser = styled.button`
     padding: 10px;
     font-size: 18px;
 `
+export const ContainerAlterniveUser = styled.div`
+    width: 100%;
+    text-align: center;
+    h2 {
+        font-size: 18px;
+    }
+`

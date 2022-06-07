@@ -1,6 +1,7 @@
+import { Link } from "react-router-dom";
 import { FormFilde } from "../../Components/FormField";
 import { Layout } from "../../Components/Layout";
-import { ButtonFormUser, ContainerFormCadastro, ContainerTitleCadastro } from "../../Components/StyledComponets";
+import { ButtonFormUser, ContainerAlterniveUser, ContainerFormCadastro, ContainerTitleCadastro } from "../../Components/StyledComponets";
 
 export function MotoraRegister() {
     return (
@@ -56,6 +57,10 @@ export function MotoraRegister() {
                 />
                 <ButtonFormUser>Cadastrar</ButtonFormUser>
             </ContainerFormCadastro>
+            <ContainerAlterniveUser>
+                <h2>Já possui Cadastro?</h2>
+                <Link to='/login'><p>Login</p></Link>
+            </ContainerAlterniveUser>
         </Layout>
     )
 }
