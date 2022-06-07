@@ -1,6 +1,6 @@
 import { FormFilde } from "../../Components/FormField";
 import { Layout } from "../../Components/Layout";
-import { ContainerFormCadastro, ContainerTitleCadastro } from "../../Components/StyledComponets";
+import { ButtonFormUser, ContainerFormCadastro, ContainerTitleCadastro } from "../../Components/StyledComponets";
 
 export function MotoraRegister() {
     return (
@@ -54,6 +54,7 @@ export function MotoraRegister() {
                     label="Modelo Veiculo"
                     placeholder="Digite o modelo do seu Veiculo"
                 />
+                <ButtonFormUser>Cadastrar</ButtonFormUser>
             </ContainerFormCadastro>
         </Layout>
     )
