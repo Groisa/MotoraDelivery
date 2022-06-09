@@ -34,6 +34,7 @@ export function RegisterUsuario() {
                         label="Nome"
                         placeholder="Digite seu nome"
                         {...formik.getFieldProps('name')}
+                        required
                     // error="Prencha seu nome"
                     // isInvalid
                     />
@@ -43,6 +44,7 @@ export function RegisterUsuario() {
                         type='email'
                         placeholder="Digite seu email"
                         {...formik.getFieldProps('email')}
+                        required
                     // error="Prencha seu nome"
                     // isInvalid
                     />
@@ -52,6 +54,7 @@ export function RegisterUsuario() {
                         label="Senha"
                         placeholder="Insira sua senha"
                         {...formik.getFieldProps('password')}
+                        required
                     // error="Prencha seu nome"
                     // isInvalid
                     />
@@ -64,12 +67,14 @@ export function RegisterUsuario() {
                         ]}
                         onAccept={values => formik.setFieldValue('phone', values)}
                         {...formik.getFieldProps('phone')}
+                        required
                     />
                     <FormFilde
                         controlId="UserEndereço"
                         label="Endereço"
                         placeholder="Digite seu endereço"
                         {...formik.getFieldProps('address')}
+                        required
                     />
                     <FormFilde
                         controlId="userData"
@@ -79,6 +84,7 @@ export function RegisterUsuario() {
                             { mask: '00/00/0000' }
                         ]}
                         {...formik.getFieldProps('date')}
+                        required
                     />
                     <FormFilde
                         type='file'
@@ -86,6 +92,7 @@ export function RegisterUsuario() {
                         label="Foto"
                         placeholder="Insira sua foto"
                         {...formik.getFieldProps('file')}
+                        required
                     />
                     <ButtonFormUser type="submit">Cadastrar</ButtonFormUser>
                 </Form>

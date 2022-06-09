@@ -2,9 +2,27 @@ import { Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FormFilde } from "../../Components/FormField";
 import { Layout } from "../../Components/Layout";
+import { useFormik } from "formik";
 import { ButtonFormUser, ContainerAlterniveUser, ContainerFormCadastro, ContainerTitleCadastro } from "../../Components/StyledComponets";
 
 export function MotoraRegister() {
+    const formik= useFormik({
+        initialValues: {
+            name: '',
+            email: '',
+            phone: '',
+            password: '',
+            address: '',
+            date: '',
+            cpf: '',
+            file: '',
+            placa:'',
+            model:'',
+        },
+        onSubmit: (values) => {
+            console.log('oi', values)
+        }
+    })
     return (
         <Layout>
             <ContainerTitleCadastro>
@@ -13,11 +31,13 @@ export function MotoraRegister() {
             </ContainerTitleCadastro>
             <ContainerFormCadastro>
                 <h1>Cadastre-se</h1>
-                <Form>
+                <Form onSubmit={formik.handleSubmit}>
                     <FormFilde
                         controlId="UserNome"
                         label="Nome"
                         placeholder="Digite seu nome"
+                        {...formik.getFieldProps('name')}
+                        required
                     // error="Prencha seu nome"
                     // isInvalid
                     />
@@ -26,6 +46,8 @@ export function MotoraRegister() {
                         label="Email"
                         type='email'
                         placeholder="Digite seu email"
+                        {...formik.getFieldProps('email')}
+                        required
                     // error="Prencha seu nome"
                     // isInvalid
                     />
@@ -34,6 +56,8 @@ export function MotoraRegister() {
                         controlId="Userpassword"
                         label="Senha"
                         placeholder="Insira sua senha"
+                        {...formik.getFieldProps('password')}
+                        required
                     // error="Prencha seu nome"
                     // isInvalid
                     />
@@ -44,6 +68,9 @@ export function MotoraRegister() {
                         mask={[
                             { mask: '(00) 00000-0000' }
                         ]}
+                        {...formik.getFieldProps('phone')}
+                        onAccept={values => formik.setFieldValue('phone', values)}
+                        required
                     />
                     <FormFilde
                         controlId="userCpf"
@@ -52,12 +79,16 @@ export function MotoraRegister() {
                         mask={[
                             { mask: '000.000.000-00' }
                         ]}
+                        {...formik.getFieldProps('cpf')}
+                        onAccept={values => formik.setFieldValue('cpf', values)}
+                        required
                     />
                     <FormFilde
                         controlId="UserEndereço"
                         label="Endereço"
                         placeholder="Digite seu endereço"
-
+                        {...formik.getFieldProps('address')}
+                        required
                     />
                     <FormFilde
                         controlId="userData"
@@ -66,6 +97,9 @@ export function MotoraRegister() {
                         mask={[
                             { mask: '00/00/0000' }
                         ]}
+                        {...formik.getFieldProps('date')}
+                        onAccept={values => formik.setFieldValue('date', values)}
+                        required
                     />
                     <FormFilde
                         controlId="UserPlaca"
@@ -75,19 +109,26 @@ export function MotoraRegister() {
                             { mask: 'aaa-0000' },
                             { mask: 'aaa0a00' },
                         ]}
+                        {...formik.getFieldProps('placa')}
+                        onAccept={values => formik.setFieldValue('placa', values)}
+                        required
                     />
                     <FormFilde
                         controlId="UserModelo"
                         label="Modelo Veiculo"
                         placeholder="Digite o modelo do seu Veiculo"
+                        {...formik.getFieldProps('model')}
+                        required
                     />
                     <FormFilde
                         type='file'
                         controlId="UerFoto"
                         label="Foto"
                         placeholder="Insira sua foto"
+                        {...formik.getFieldProps('file')}
+                        required
                     />
-                    <ButtonFormUser>Cadastrar</ButtonFormUser>
+                    <ButtonFormUser type='submit'>Cadastrar</ButtonFormUser>
                 </Form>
             </ContainerFormCadastro>
             <ContainerAlterniveUser>
