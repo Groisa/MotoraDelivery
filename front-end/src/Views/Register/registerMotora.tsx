@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import { FormFilde } from "../../Components/FormField";
 import { Layout } from "../../Components/Layout";
 import { useFormik } from "formik";
-import { ButtonFormUser, ContainerAlterniveUser, ContainerFormCadastro, ContainerTitleCadastro } from "../../Components/StyledComponets";
+import { ButtonFormUser, ContainerAlterniveUser, ContainerFormUser, ContainerTitleUser } from "../../Components/StyledComponets";
+import * as yup from 'yup'
 
 export function MotoraRegister() {
-    const formik= useFormik({
+    const formik = useFormik({
         initialValues: {
             name: '',
             email: '',
@@ -16,20 +17,32 @@ export function MotoraRegister() {
             date: '',
             cpf: '',
             file: '',
-            placa:'',
-            model:'',
+            placa: '',
+            model: '',
         },
+        validationSchema: yup.object().shape({
+            name : yup.string().required('Preencha seu nome').min(5, 'O numero mínimo de caracteres é 5'),
+            email: yup.string().required('Preencha seu email').email('Preencha com um email valido'),
+            phone: yup.string().required('Preencha seu telefone'),
+            password: yup.string().required('Preencha sua senha').min(8,'Mínimo de 8 caracteres').max(20, 'Máximo de 20 caracteres'),
+            address: yup.string().required('Preencha seu endereço'),
+            date: yup.string().required('Preencha sua data de nascimento'),
+            cpf: yup.string().required('Preencha seu cpf'),
+            model: yup.string().required('Preencha o modelo do seu carro'),
+            placa: yup.string().required('Preencha sua Placa'),
+            file: yup.string().required('Preencha com sua foto'),
+        }),
         onSubmit: (values) => {
             console.log('oi', values)
         }
     })
     return (
         <Layout>
-            <ContainerTitleCadastro>
+            <ContainerTitleUser>
                 <h1>Entregue pelo App do MotoraDelivery</h1>
                 <p>Você escolhe o quando quer ganhar dinheiro!</p>
-            </ContainerTitleCadastro>
-            <ContainerFormCadastro>
+            </ContainerTitleUser>
+            <ContainerFormUser>
                 <h1>Cadastre-se</h1>
                 <Form onSubmit={formik.handleSubmit}>
                     <FormFilde
@@ -37,9 +50,9 @@ export function MotoraRegister() {
                         label="Nome"
                         placeholder="Digite seu nome"
                         {...formik.getFieldProps('name')}
-                        required
-                    // error="Prencha seu nome"
-                    // isInvalid
+                        error={formik.errors['name']}
+                        isInvalid={formik.touched['name'] && !!formik.errors['name']}
+                        isValid={formik.touched['name'] && !formik.errors['name']}
                     />
                     <FormFilde
                         controlId="UserEmail"
@@ -47,9 +60,9 @@ export function MotoraRegister() {
                         type='email'
                         placeholder="Digite seu email"
                         {...formik.getFieldProps('email')}
-                        required
-                    // error="Prencha seu nome"
-                    // isInvalid
+                        error={formik.errors['email']}
+                        isInvalid={formik.touched['email'] && !!formik.errors['email']}
+                        isValid={formik.touched['email'] && !formik.errors['email']}
                     />
                     <FormFilde
                         type='password'
@@ -57,9 +70,9 @@ export function MotoraRegister() {
                         label="Senha"
                         placeholder="Insira sua senha"
                         {...formik.getFieldProps('password')}
-                        required
-                    // error="Prencha seu nome"
-                    // isInvalid
+                        error={formik.errors['password']}
+                        isInvalid={formik.touched['password'] && !!formik.errors['password']}
+                        isValid={formik.touched['password'] && !formik.errors['password']}
                     />
                     <FormFilde
                         controlId="PhoneUser"
@@ -70,7 +83,9 @@ export function MotoraRegister() {
                         ]}
                         {...formik.getFieldProps('phone')}
                         onAccept={values => formik.setFieldValue('phone', values)}
-                        required
+                        error={formik.errors['phone']}
+                        isInvalid={formik.touched['phone'] && !!formik.errors['phone']}
+                        isValid={formik.touched['phone'] && !formik.errors['phone']}
                     />
                     <FormFilde
                         controlId="userCpf"
@@ -81,14 +96,18 @@ export function MotoraRegister() {
                         ]}
                         {...formik.getFieldProps('cpf')}
                         onAccept={values => formik.setFieldValue('cpf', values)}
-                        required
+                        error={formik.errors['cpf']}
+                        isInvalid={formik.touched['cpf'] && !!formik.errors['cpf']}
+                        isValid={formik.touched['cpf'] && !formik.errors['cpf']}
                     />
                     <FormFilde
                         controlId="UserEndereço"
                         label="Endereço"
                         placeholder="Digite seu endereço"
                         {...formik.getFieldProps('address')}
-                        required
+                        error={formik.errors['address']}
+                        isInvalid={formik.touched['address'] && !!formik.errors['address']}
+                        isValid={formik.touched['address'] && !formik.errors['address']}
                     />
                     <FormFilde
                         controlId="userData"
@@ -99,7 +118,9 @@ export function MotoraRegister() {
                         ]}
                         {...formik.getFieldProps('date')}
                         onAccept={values => formik.setFieldValue('date', values)}
-                        required
+                        error={formik.errors['date']}
+                        isInvalid={formik.touched['date'] && !!formik.errors['date']}
+                        isValid={formik.touched['date'] && !formik.errors['date']}
                     />
                     <FormFilde
                         controlId="UserPlaca"
@@ -111,14 +132,18 @@ export function MotoraRegister() {
                         ]}
                         {...formik.getFieldProps('placa')}
                         onAccept={values => formik.setFieldValue('placa', values)}
-                        required
+                        error={formik.errors['placa']}
+                        isInvalid={formik.touched['placa'] && !!formik.errors['placa']}
+                        isValid={formik.touched['placa'] && !formik.errors['placa']}
                     />
                     <FormFilde
                         controlId="UserModelo"
                         label="Modelo Veiculo"
                         placeholder="Digite o modelo do seu Veiculo"
                         {...formik.getFieldProps('model')}
-                        required
+                        error={formik.errors['model']}
+                        isInvalid={formik.touched['model'] && !!formik.errors['model']}
+                        isValid={formik.touched['model'] && !formik.errors['model']}
                     />
                     <FormFilde
                         type='file'
@@ -126,11 +151,13 @@ export function MotoraRegister() {
                         label="Foto"
                         placeholder="Insira sua foto"
                         {...formik.getFieldProps('file')}
-                        required
+                        error={formik.errors['file']}
+                        isInvalid={formik.touched['file'] && !!formik.errors['file']}
+                        isValid={formik.touched['file'] && !formik.errors['file']}
                     />
                     <ButtonFormUser type='submit'>Cadastrar</ButtonFormUser>
                 </Form>
-            </ContainerFormCadastro>
+            </ContainerFormUser>
             <ContainerAlterniveUser>
                 <h2>Já possui Cadastro?</h2>
                 <Link to='/login'><p>Login</p></Link>

@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
-export const ContainerTitleCadastro = styled.div`
+export const ContainerTitleUser = styled.div`
     width: 100%;
     background-color: #000;
     color: #fff;
     padding: 25px;
     text-align: center;
 ` 
-export const ContainerFormCadastro = styled.div`
+export const ContainerFormUser= styled.div`
     padding: 10px;
     padding-bottom: 50px;
     h1 {
