@@ -1,10 +1,13 @@
-import { Form } from "react-bootstrap";
+import { Form} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FormFilde } from "../../Components/FormField";
 import { Layout } from "../../Components/Layout";
 import { useFormik } from "formik";
 import { ButtonFormUser, ContainerAlterniveUser, ContainerFormUser, ContainerTitleUser } from "../../Components/StyledComponets";
 import * as yup from 'yup'
+import { createUserMotoboy } from "../../Services/createUserMotoBoy";
+import { FirebaseError } from "firebase/app";
+import { AuthErrorCodes } from "firebase/auth";
 
 export function MotoraRegister() {
     const formik = useFormik({
@@ -19,12 +22,13 @@ export function MotoraRegister() {
             file: '',
             placa: '',
             model: '',
+            type: 'Motora',
         },
         validationSchema: yup.object().shape({
-            name : yup.string().required('Preencha seu nome').min(5, 'O numero mínimo de caracteres é 5'),
+            name: yup.string().required('Preencha seu nome').min(5, 'O numero mínimo de caracteres é 5'),
             email: yup.string().required('Preencha seu email').email('Preencha com um email valido'),
             phone: yup.string().required('Preencha seu telefone'),
-            password: yup.string().required('Preencha sua senha').min(8,'Mínimo de 8 caracteres').max(20, 'Máximo de 20 caracteres'),
+            password: yup.string().required('Preencha sua senha').min(8, 'Mínimo de 8 caracteres').max(20, 'Máximo de 20 caracteres'),
             address: yup.string().required('Preencha seu endereço'),
             date: yup.string().required('Preencha sua data de nascimento'),
             cpf: yup.string().required('Preencha seu cpf'),
@@ -32,8 +36,16 @@ export function MotoraRegister() {
             placa: yup.string().required('Preencha sua Placa'),
             file: yup.string().required('Preencha com sua foto'),
         }),
-        onSubmit: (values) => {
-            console.log('oi', values)
+        onSubmit: async (values) => {
+            try {
+                const user = await createUserMotoboy(values)
+                console.log('user', user)
+            } catch (error) {
+                if (error instanceof FirebaseError && error.code === AuthErrorCodes.EMAIL_EXISTS) {
+                    formik.setFieldError('email', 'Email já esta em uso')
+                    return
+                } 
+            }
         }
     })
     return (

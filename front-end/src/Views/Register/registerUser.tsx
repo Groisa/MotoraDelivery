@@ -1,12 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { FormFilde } from "../../Components/FormField";
 import { Layout } from "../../Components/Layout";
 import { ButtonFormUser, ContainerAlterniveUser, ContainerFormUser, ContainerTitleUser } from "../../Components/StyledComponets";
 import { useFormik } from "formik";
 import { Form } from "react-bootstrap";
 import * as yup from 'yup'
+import { createUserCliente } from "../../Services/createUserClient";
+import { FirebaseError } from "firebase/app";
+import { AuthErrorCodes } from "firebase/auth";
 
 export function RegisterUsuario() {
+    const navigate = useNavigate()
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -16,6 +20,7 @@ export function RegisterUsuario() {
             address: '',
             date: '',
             file: '',
+            type: 'Cliente'
         },
         validationSchema : yup.object().shape({
             name : yup.string().required('Preencha seu nome').min(5, 'O numero mínimo de caracteres é 5'),
@@ -26,8 +31,16 @@ export function RegisterUsuario() {
             date: yup.string().required('Preencha sua data de nascimento'),
             file: yup.string().required('Preencha com sua foto'),
         }),
-        onSubmit: (values) => {
-            console.log('oi', values)
+        onSubmit: async (values) => {
+            try {
+                const user = await createUserCliente(values)
+                console.log(user)
+            } catch (error){
+                if (error instanceof FirebaseError && error.code === AuthErrorCodes.EMAIL_EXISTS) {
+                    formik.setFieldError('email', 'Email já esta em uso')
+                    return
+                } 
+            }
         
         }
     })
