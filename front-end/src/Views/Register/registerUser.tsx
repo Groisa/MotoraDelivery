@@ -1,4 +1,4 @@
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FormFilde } from "../../Components/FormField";
 import { Layout } from "../../Components/Layout";
 import { ButtonFormUser, ContainerAlterniveUser, ContainerFormUser, ContainerTitleUser } from "../../Components/StyledComponets";
@@ -8,9 +8,11 @@ import * as yup from 'yup'
 import { createUserCliente } from "../../Services/createUserClient";
 import { FirebaseError } from "firebase/app";
 import { AuthErrorCodes } from "firebase/auth";
+import { useDispatch } from "react-redux";
+import { updateUserCliente } from "../../Store/slices/userSlicesCliente";
 
 export function RegisterUsuario() {
-    const navigate = useNavigate()
+    const dispath = useDispatch()
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -34,7 +36,7 @@ export function RegisterUsuario() {
         onSubmit: async (values) => {
             try {
                 const user = await createUserCliente(values)
-                console.log(user)
+                dispath(updateUserCliente(user))
             } catch (error){
                 if (error instanceof FirebaseError && error.code === AuthErrorCodes.EMAIL_EXISTS) {
                     formik.setFieldError('email', 'Email já esta em uso')

@@ -8,8 +8,11 @@ import * as yup from 'yup'
 import { createUserMotoboy } from "../../Services/createUserMotoBoy";
 import { FirebaseError } from "firebase/app";
 import { AuthErrorCodes } from "firebase/auth";
+import { updateUserMotora } from "../../Store/slices/userSlicesMotora";
+import { useDispatch } from "react-redux";
 
 export function MotoraRegister() {
+    const dispath = useDispatch()
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -39,7 +42,7 @@ export function MotoraRegister() {
         onSubmit: async (values) => {
             try {
                 const user = await createUserMotoboy(values)
-                console.log('user', user)
+                dispath(updateUserMotora(user))
             } catch (error) {
                 if (error instanceof FirebaseError && error.code === AuthErrorCodes.EMAIL_EXISTS) {
                     formik.setFieldError('email', 'Email já esta em uso')
