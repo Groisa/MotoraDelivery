@@ -6,11 +6,24 @@ import logo from '../../img/Logo.png'
 import { FaUserCircle, FaHome, FaAddressCard } from 'react-icons/fa';
 import { useState } from "react";
 import { FaWifi, FaShoppingBag } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { deletUserCliente, selectUserClientLogged } from "../../Store/slices/userSlicesCliente";
+import { deletUserMotora, selectUserMotoraLogged } from "../../Store/slices/userSlicesMotora";
+import { RiLogoutBoxLine, RiChatNewLine, RiFileSearchFill } from "react-icons/ri";
 
 export function Header() {
+    const userClient = useSelector(selectUserClientLogged)
+    const userMotora = useSelector(selectUserMotoraLogged)
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const dispath = useDispatch()
+    const handleSingInClient = () => {
+        dispath(deletUserCliente())
+    }
+    const handleSingInMotora = () => {
+        dispath(deletUserMotora())
+    }
     return (
         <>
             <Navbar expand='lg' fixed='top' bg='dark' variant="dark">
@@ -37,18 +50,54 @@ export function Header() {
                                         <FaHome />
                                     </DivNavLink>
                                 </Nav.Link >
-                                <Nav.Link as={Link} to='/login'>
-                                    <DivNavLink>
-                                        <span>Login</span>
-                                        <FaUserCircle />
-                                    </DivNavLink>
-                                </Nav.Link>
-                                <Nav.Link>
-                                    <DivNavLink onClick={handleShow}>
-                                        <span>Cadastro</span>
-                                        <FaAddressCard />
-                                    </DivNavLink>
-                                </Nav.Link>
+                                {userClient && (
+                                    <>
+                                        <Nav.Link as={Link} to='/novo-pedido'>
+                                            <DivNavLink>
+                                                <span>Novo pedido</span>
+                                                <RiChatNewLine />
+                                            </DivNavLink>
+                                        </Nav.Link>
+                                        <Nav.Link>
+                                            <DivNavLink onClick={handleSingInClient}>
+                                                <span>Sair</span>
+                                                <RiLogoutBoxLine />
+                                            </DivNavLink>
+                                        </Nav.Link>
+                                    </>
+                                )}
+                                {userMotora && (
+                                    <>
+                                        <Nav.Link as={Link} to='/procurar-pedido'>
+                                            <DivNavLink>
+                                                <span>Procurar pedido</span>
+                                                <RiFileSearchFill />
+                                            </DivNavLink>
+                                        </Nav.Link>
+                                        <Nav.Link>
+                                            <DivNavLink onClick={handleSingInMotora}>
+                                                <span>Sair</span>
+                                                <RiLogoutBoxLine />
+                                            </DivNavLink>
+                                        </Nav.Link>
+                                    </>
+                                )}
+                                {userClient || userMotora === false && (
+                                    <>
+                                        <Nav.Link as={Link} to='/login'>
+                                            <DivNavLink>
+                                                <span>Login</span>
+                                                <FaUserCircle />
+                                            </DivNavLink>
+                                        </Nav.Link>
+                                        <Nav.Link>
+                                            <DivNavLink onClick={handleShow}>
+                                                <span>Cadastro</span>
+                                                <FaAddressCard />
+                                            </DivNavLink>
+                                        </Nav.Link>
+                                    </>
+                                )}
                             </Nav>
                             <NavOffCanvasFooter fixed="bottom" bg='dark' variant='dark'>
                                 <DivOffCanvasFotter>
@@ -66,12 +115,29 @@ export function Header() {
                             </NavOffCanvasFooter>
                         </Offcanvas.Body>
                     </Navbar.Offcanvas>
-                    <Navbar.Brand as={Link} to='/'>
-                        <StyledCompleNav>
-                            <FaUserCircle />
-                            <BottonStyled variant='light' onClick={handleShow}>Cadastre-se</BottonStyled>
-                        </StyledCompleNav>
-                    </Navbar.Brand>
+                    {userClient && (
+                        <Navbar.Brand>
+                            <StyledCompleNav>
+                                <RiLogoutBoxLine onClick={handleSingInClient}/>
+                                <BottonStyled variant='light'>Novo Pedido</BottonStyled>
+                            </StyledCompleNav>
+                        </Navbar.Brand>
+                    )}
+                    {userClient || userMotora === false && (
+                        <Navbar.Brand>
+                            <StyledCompleNav>
+                                <FaUserCircle />
+                                <BottonStyled variant='light' onClick={handleShow}>Cadastre-se</BottonStyled>
+                            </StyledCompleNav>
+                        </Navbar.Brand>)}
+                    {userMotora && (
+                        <Navbar.Brand>
+                            <StyledCompleNav>
+                                <RiLogoutBoxLine onClick={handleSingInMotora} />
+                                <BottonStyled variant='light'>Procurar pedido</BottonStyled>
+                            </StyledCompleNav>
+                        </Navbar.Brand>
+                    )}
                 </Container>
             </Navbar>
             <Modal
@@ -111,7 +177,7 @@ export function Header() {
                                 <h1>Receba sem sair de casa</h1>
                                 <p>Receba e envie entregas no conforto de sua casa com preço justo e qualidade</p>
                                 <Nav.Link as={Link} to='/cadastro-usuario'>
-                                    <Button variant='dark'>Solicite agora</Button>
+                                    <Button variant='dark'>Faça seu cadastro</Button>
                                 </Nav.Link>
                             </Accordion.Body>
                         </Accordion.Item>

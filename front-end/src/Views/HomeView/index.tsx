@@ -7,7 +7,12 @@ import BackGround2 from '../../img/backgroundMoto2.jpg'
 import MotoBoyCard1 from '../../img/CardMotoboy.jpg'
 import MotoBoyCard2 from '../../img/CardMoto2.jpg'
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import {  selectUserMotoraLogged } from "../../Store/slices/userSlicesMotora";
+import { selectUserClientLogged } from "../../Store/slices/userSlicesCliente";
 export function HomeView() {
+    const userClient = useSelector(selectUserClientLogged)
+    const userMotora = useSelector(selectUserMotoraLogged)
     return (
         <Layout>
             <DivContainerImg>
@@ -21,30 +26,51 @@ export function HomeView() {
                         <Accordion.Header>
                             <DivHeaderAccordion>
                                 <FaWifi />
-                                <span>Faça Entregas</span>
+                                {userMotora ? (
+                                    <span>Vamos Entregar?</span>
+                                ) : (
+                                    <span>Faça Entregas</span>
+                                )}
                             </DivHeaderAccordion>
                         </Accordion.Header>
                         <Accordion.Body>
                             <h1>Entregue e ganhe</h1>
                             <p>Ofereça entregas de alta qualidade com o rendimento que você merece!</p>
-                            <Nav.Link as={Link} to='/cadastro-motora'>
-                                <Button variant='dark'>Cadastre-se para entregar</Button>
-                            </Nav.Link>
+                            {userMotora ? (
+                                <Nav.Link as={Link} to='/procurar-pedido'>
+                                    <Button variant='dark'>Procurar Pedidos</Button>
+                                </Nav.Link>
+                            ) : (
+                                <Nav.Link as={Link} to='/cadastro-motora'>
+                                    <Button variant='dark'>Cadastre-se para entregar</Button>
+                                </Nav.Link>
+                            )}
+
                         </Accordion.Body>
                     </Accordion.Item>
                     <Accordion.Item eventKey="1">
                         <Accordion.Header>
                             <DivHeaderAccordion>
                                 <FaShoppingBag />
-                                <span>Receba e envie entregas</span>
+                                {userClient ? (
+                                    <span>Vamos fazer um pedido?</span>
+                                ) : (
+                                    <span>Receba e envie entregas</span>
+                                )}
                             </DivHeaderAccordion>
                         </Accordion.Header>
                         <Accordion.Body>
                             <h1>Receba sem sair de casa</h1>
                             <p>Receba e envie entregas no conforto de sua casa com preço justo e qualidade</p>
-                            <Nav.Link as={Link} to='/cadastro-usuario'>
-                                <Button variant='dark'>Solicite agora</Button>
-                            </Nav.Link>
+                            {userClient ? (
+                                <Nav.Link as={Link} to='/novo-pedido'>
+                                    <Button variant='dark'>Solicite agora</Button>
+                                </Nav.Link>
+                            ) : (
+                                <Nav.Link as={Link} to='/cadastro-usuario'>
+                                    <Button variant='dark'>Faça seu cadastro</Button>
+                                </Nav.Link>
+                            )}
                         </Accordion.Body>
                     </Accordion.Item>
                 </Accordion>
@@ -80,7 +106,7 @@ export function HomeView() {
                     </DivCard>
                 </DivContainerFeed>
             </div>
-        </Layout>
+        </Layout >
     )
 }
 const DivCard = styled.div`

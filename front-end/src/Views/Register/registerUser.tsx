@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FormFilde } from "../../Components/FormField";
 import { Layout } from "../../Components/Layout";
 import { ButtonFormUser, ContainerAlterniveUser, ContainerFormUser, ContainerTitleUser } from "../../Components/StyledComponets";
@@ -13,6 +13,7 @@ import { updateUserCliente } from "../../Store/slices/userSlicesCliente";
 
 export function RegisterUsuario() {
     const dispath = useDispatch()
+    const navigate = useNavigate()
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -37,6 +38,7 @@ export function RegisterUsuario() {
             try {
                 const user = await createUserCliente(values)
                 dispath(updateUserCliente(user))
+                navigate('/')
             } catch (error){
                 if (error instanceof FirebaseError && error.code === AuthErrorCodes.EMAIL_EXISTS) {
                     formik.setFieldError('email', 'Email já esta em uso')
@@ -128,7 +130,10 @@ export function RegisterUsuario() {
                         isInvalid={formik.touched['file'] && !!formik.errors['file']}
                         isValid={formik.touched['file'] && !formik.errors['file']}
                     />
-                    <ButtonFormUser type="submit">Cadastrar</ButtonFormUser>
+                    <ButtonFormUser 
+                    disabled={formik.isSubmitting || formik.isValidating}
+                    type="submit"
+                    >Cadastrar</ButtonFormUser>
                 </Form>
             </ContainerFormUser>
             <ContainerAlterniveUser>

@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { UserClient } from '../../Entites/User'
+import { RootState } from "../store";
 
 type UserState = {
     loadingUser : boolean 
@@ -13,14 +14,16 @@ const slice = createSlice({
     name: 'userPrefix',
     initialState,
     reducers: {
-        updateUserCliente: (action, state: PayloadAction<UserClient>) => {
-            console.log('state é', state)
-            console.log('ação', action)
+        updateUserCliente: (state, action: PayloadAction<UserClient>) => {
+            state.loadingUser = false
+            state.user = action.payload
         },
-        deleUserCliente: () => {
-
+        deletUserCliente: (state) => {
+            state.loadingUser = false
+            state.user = null
         }
     }
 })
-export const { deleUserCliente, updateUserCliente } = slice.actions
+export const { deletUserCliente, updateUserCliente } = slice.actions
 export default slice.reducer
+export const selectUserClientLogged = (state: RootState) => !!state.userDataCliente.user
