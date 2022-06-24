@@ -126,7 +126,6 @@ export function RegisterUsuario() {
                         label="Foto"
                         placeholder="Insira sua foto"
                         {...formik.getFieldProps('file')}
-                        error={formik.errors['file']}
                         isInvalid={formik.touched['file'] && !!formik.errors['file']}
                         isValid={formik.touched['file'] && !formik.errors['file']}
                     />

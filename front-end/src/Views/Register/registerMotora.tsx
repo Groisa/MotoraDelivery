@@ -23,9 +23,9 @@ export function MotoraRegister() {
             address: '',
             date: '',
             cpf: '',
-            file: '',
             placa: '',
             model: '',
+            file: '',
             type: 'Motora',
         },
         validationSchema: yup.object().shape({
@@ -168,7 +168,6 @@ export function MotoraRegister() {
                         label="Foto"
                         placeholder="Insira sua foto"
                         {...formik.getFieldProps('file')}
-                        error={formik.errors['file']}
                         isInvalid={formik.touched['file'] && !!formik.errors['file']}
                         isValid={formik.touched['file'] && !formik.errors['file']}
                     />

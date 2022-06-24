@@ -11,20 +11,18 @@ type NewInput = {
     address: string
     date: string
     cpf: string
-    file: string
     placa: string
     model: string
     type: string
 }
 
-export const createUserMotoboy = async ({ email, password, name, phone, address, date, file, placa, model, type, cpf }: NewInput): Promise<UserMotora> => {
+export const createUserMotoboy = async ({ email, password, name, phone, address, date, placa, model, type, cpf }: NewInput): Promise<UserMotora> => {
     const result = await createUserWithEmailAndPassword(auth, email, password)
     await setDoc(doc(db, 'users', result.user.uid), {
         name,
         phone,
         address,
         date,
-        file,
         placa,
         model,
         type,
@@ -37,7 +35,6 @@ export const createUserMotoboy = async ({ email, password, name, phone, address,
         phone,
         address,
         date,
-        file,
         placa,
         model,
         type,

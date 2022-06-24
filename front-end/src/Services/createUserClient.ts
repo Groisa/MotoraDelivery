@@ -10,11 +10,10 @@ type NewDate = {
     password: string
     address: string
     date: string
-    file: string
     type: string
 }
 
-export const createUserCliente = async ({ name, email, password, phone, address, date, file, type }: NewDate): Promise<UserClient> => {
+export const createUserCliente = async ({ name, email, password, phone, address, date, type }: NewDate): Promise<UserClient> => {
     const result = await createUserWithEmailAndPassword(auth, email, password)
     setDoc(doc(db, 'users', result.user.uid), {
         name,
@@ -22,7 +21,6 @@ export const createUserCliente = async ({ name, email, password, phone, address,
         phone,
         address,
         date,
-        file,
         type,
     })
     return {
@@ -32,7 +30,6 @@ export const createUserCliente = async ({ name, email, password, phone, address,
         phone,
         address,
         date,
-        file,
         type,
     }
 }   

@@ -1,5 +1,5 @@
 import { Accordion, Button, Container, Modal, Nav, Navbar, Offcanvas } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import letraLogo from '../../img/letrasPreta.png'
 import logo from '../../img/Logo.png'
@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { deletUserCliente, selectUserClientLogged } from "../../Store/slices/userSlicesCliente";
 import { deletUserMotora, selectUserMotoraLogged } from "../../Store/slices/userSlicesMotora";
 import { RiLogoutBoxLine, RiChatNewLine, RiFileSearchFill } from "react-icons/ri";
+import { logoutUser } from "../../Services/logout";
 
 export function Header() {
     const userClient = useSelector(selectUserClientLogged)
@@ -18,11 +19,14 @@ export function Header() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const dispath = useDispatch()
+    const navigate = useNavigate()
     const handleSingInClient = () => {
         dispath(deletUserCliente())
     }
-    const handleSingInMotora = () => {
+    const handleLogout = async () => {
+        await logoutUser()
         dispath(deletUserMotora())
+        navigate('/')
     }
     return (
         <>
@@ -59,7 +63,7 @@ export function Header() {
                                             </DivNavLink>
                                         </Nav.Link>
                                         <Nav.Link>
-                                            <DivNavLink onClick={handleSingInClient}>
+                                            <DivNavLink onClick={handleLogout}>
                                                 <span>Sair</span>
                                                 <RiLogoutBoxLine />
                                             </DivNavLink>
@@ -75,7 +79,7 @@ export function Header() {
                                             </DivNavLink>
                                         </Nav.Link>
                                         <Nav.Link>
-                                            <DivNavLink onClick={handleSingInMotora}>
+                                            <DivNavLink onClick={handleLogout}>
                                                 <span>Sair</span>
                                                 <RiLogoutBoxLine />
                                             </DivNavLink>
@@ -118,7 +122,7 @@ export function Header() {
                     {userClient && (
                         <Navbar.Brand>
                             <StyledCompleNav>
-                                <RiLogoutBoxLine onClick={handleSingInClient}/>
+                                <RiLogoutBoxLine onClick={handleLogout}/>
                                 <BottonStyled variant='light'>Novo Pedido</BottonStyled>
                             </StyledCompleNav>
                         </Navbar.Brand>
@@ -133,7 +137,7 @@ export function Header() {
                     {userMotora && (
                         <Navbar.Brand>
                             <StyledCompleNav>
-                                <RiLogoutBoxLine onClick={handleSingInMotora} />
+                                <RiLogoutBoxLine onClick={handleLogout} />
                                 <BottonStyled variant='light'>Procurar pedido</BottonStyled>
                             </StyledCompleNav>
                         </Navbar.Brand>
@@ -202,6 +206,7 @@ const BottonStyled = styled(Button)`
 const StyledCompleNav = styled.div`
         color: #fff;
         font-size: 30px;
+        cursor: pointer;
     @media(min-width: 992px) {
         display:none;
     }
