@@ -27,7 +27,7 @@ export function RegisterUsuario() {
         },
         validationSchema : yup.object().shape({
             name : yup.string().required('Preencha seu nome').min(5, 'O numero mínimo de caracteres é 5'),
-            email: yup.string().required('Preencha seu email').email(),
+            email: yup.string().required('Preencha seu email').email('Preencha com um email valido'),
             phone: yup.string().required('Preencha seu telefone'),
             password: yup.string().required('Preencha sua senha').min(8,'Mínimo de 8 caracteres').max(20, 'Máximo de 20 caracteres'),
             address: yup.string().required('Preencha seu endereço'),

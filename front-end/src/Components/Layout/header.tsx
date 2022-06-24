@@ -20,13 +20,13 @@ export function Header() {
     const handleShow = () => setShow(true);
     const dispath = useDispatch()
     const navigate = useNavigate()
-    const handleSingInClient = () => {
-        dispath(deletUserCliente())
-    }
     const handleLogout = async () => {
         await logoutUser()
         dispath(deletUserMotora())
         navigate('/')
+    }
+    const handleLogin = () => {
+        navigate('/login')
     }
     return (
         <>
@@ -130,7 +130,7 @@ export function Header() {
                     {userClient || userMotora === false && (
                         <Navbar.Brand>
                             <StyledCompleNav>
-                                <FaUserCircle />
+                                <FaUserCircle onClick={handleLogin}/>
                                 <BottonStyled variant='light' onClick={handleShow}>Cadastre-se</BottonStyled>
                             </StyledCompleNav>
                         </Navbar.Brand>)}
