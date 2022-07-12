@@ -5,6 +5,7 @@ import * as yup from 'yup'
 import { ButtonFormUser } from "../../Components/StyledComponets";
 import { EstimatePrice } from "./estimeprice";
 import styled from "styled-components";
+import { AutoCompleteField } from "../../Components/AutoComplet";
 
 export function DataOrder() {
     const formik = useFormik({
@@ -14,7 +15,9 @@ export function DataOrder() {
             Description: '',
         },
         validationSchema: yup.object().shape({
-
+            AddresInitial: yup.string().required('Preencha o endereço de retirada'),
+            AddresFinal: yup.string().required('Preencha o endereço de entrega'),
+            Description: yup.string().required('Preencha a descrição'),
         }),
         onSubmit: async () => {
 
@@ -22,7 +25,7 @@ export function DataOrder() {
     })
     return (
         <Form>
-            <FormFilde
+            <AutoCompleteField
                 controlId="AddresInitial"
                 label="Endereço de retirada"
                 placeholder="Digite o endereço de retirada"
@@ -31,7 +34,7 @@ export function DataOrder() {
                 isInvalid={formik.touched['AddresInitial'] && !!formik.errors['AddresInitial']}
                 isValid={formik.touched['AddresInitial'] && !formik.errors['AddresInitial']}
             />
-            <FormFilde
+            <AutoCompleteField
                 controlId="AddresFinal"
                 label="Endereço de entrega"
                 placeholder="Digite o endereço de entrega"
