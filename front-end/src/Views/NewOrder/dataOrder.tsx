@@ -6,25 +6,29 @@ import { ButtonFormUser } from "../../Components/StyledComponets";
 import { EstimatePrice } from "./estimeprice";
 import styled from "styled-components";
 import { AutoCompleteField } from "../../Components/AutoComplet";
+import { Address } from "../../Entites/Address";
 
+type FormValues = {
+    AddresInitial: Address | null
+    AddresFinal: Address | null
+    Description: string
+}
 export function DataOrder() {
-    const formik = useFormik({
+    const formik = useFormik<FormValues>({
         initialValues: {
-            AddresInitial: '',
-            AddresFinal: '',
+            AddresInitial: null,
+            AddresFinal: null,
             Description: '',
         },
         validationSchema: yup.object().shape({
-            AddresInitial: yup.string().required('Preencha o endereço de retirada'),
-            AddresFinal: yup.string().required('Preencha o endereço de entrega'),
             Description: yup.string().required('Preencha a descrição'),
         }),
-        onSubmit: async () => {
-
+        onSubmit: async (values) => {
+            console.log(values)
         }
     })
     return (
-        <Form>
+        <Form onSubmit={formik.handleSubmit}>
             <AutoCompleteField
                 controlId="AddresInitial"
                 label="Endereço de retirada"
@@ -33,6 +37,7 @@ export function DataOrder() {
                 error={formik.errors['AddresInitial']}
                 isInvalid={formik.touched['AddresInitial'] && !!formik.errors['AddresInitial']}
                 isValid={formik.touched['AddresInitial'] && !formik.errors['AddresInitial']}
+                onChange={(address) => formik.setFieldValue('AddresInitial', address)}
             />
             <AutoCompleteField
                 controlId="AddresFinal"
@@ -42,6 +47,7 @@ export function DataOrder() {
                 error={formik.errors['AddresFinal']}
                 isInvalid={formik.touched['AddresFinal'] && !!formik.errors['AddresFinal']}
                 isValid={formik.touched['AddresFinal'] && !formik.errors['AddresFinal']}
+                onChange={(address) => formik.setFieldValue('AddresFinal', address)}
             />
             <FormFilde
                 controlId="Description"

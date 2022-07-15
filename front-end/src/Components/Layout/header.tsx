@@ -123,7 +123,7 @@ export function Header() {
                         <Navbar.Brand>
                             <StyledCompleNav>
                                 <RiLogoutBoxLine onClick={handleLogout}/>
-                                <BottonStyled variant='light'>Novo Pedido</BottonStyled>
+                                <BottonStyled variant='light' onClick={() => navigate('/novo-pedido')}>Novo Pedido</BottonStyled>
                             </StyledCompleNav>
                         </Navbar.Brand>
                     )}

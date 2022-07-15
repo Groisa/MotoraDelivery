@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Routes, Route } from 'react-router-dom'
 import { auth } from './Services/firebase';
-import { getUserClient, getUserMotora } from './Services/getUser';
+import { getUser } from './Services/getUser';
 import { deletUserCliente, updateUserCliente } from './Store/slices/userSlicesCliente';
 import { deletUserMotora, updateUserMotora } from './Store/slices/userSlicesMotora';
 import { HomeView } from './Views/HomeView';
@@ -17,14 +17,13 @@ function App() {
     const getAuth = async () => {
       await onAuthStateChanged(auth, async (user) => {
         if (user) {
-          const userMotora = await getUserMotora(user.uid)
-          const userClient = await getUserClient(user.uid)
-          if (userClient.type === 'Cliente') {
-            dispath(updateUserCliente(userClient))
+          const userType = await getUser(user.uid)
+          if (userType.type === 'Cliente') {
+            dispath(updateUserCliente(userType))
             dispath(deletUserMotora())
           }
-          if (userMotora.type === 'Motora') {
-            dispath(updateUserMotora(userMotora))
+          if (userType.type === 'Motora') {
+            dispath(updateUserMotora(userType))
             dispath(deletUserCliente())
           }
         } else {

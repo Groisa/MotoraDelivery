@@ -1,23 +1,52 @@
 import { useFormik } from "formik";
 import { Form } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FormFilde } from "../../Components/FormField";
 import { Layout } from "../../Components/Layout";
 import { ButtonFormUser, ContainerAlterniveUser, ContainerFormUser, ContainerTitleUser } from "../../Components/StyledComponets";
 import * as yup from 'yup'
 import { loginUser } from "../../Services/loginUser";
+import { getUser } from "../../Services/getUser";
+import { useDispatch } from "react-redux";
+import { deletUserCliente, updateUserCliente } from "../../Store/slices/userSlicesCliente";
+import { deletUserMotora, updateUserMotora } from "../../Store/slices/userSlicesMotora";
+import { toast } from "react-toastify";
+import { FirebaseError } from "firebase/app";
+import { AuthErrorCodes } from "firebase/auth";
 export function LoginPage() {
+    const dispath = useDispatch()
+    const navigate = useNavigate()
     const formik = useFormik({
         initialValues: {
             email: '',
             password: '',
         },
-        validationSchema : yup.object().shape({
+        validationSchema: yup.object().shape({
             email: yup.string().required('Preencha seu email').email('Preencha com um email valido'),
-            password: yup.string().required('Preencha sua senha').min(8,'Mínimo de 8 caracteres').max(20, 'Máximo de 20 caracteres')
+            password: yup.string().required('Preencha sua senha').min(8, 'Mínimo de 8 caracteres').max(20, 'Máximo de 20 caracteres')
         }),
         onSubmit: async (values) => {
-           await  loginUser(values)
+            try {
+                const result = await loginUser(values)
+                const user = await getUser(result)
+                if (user.type === 'Cliente') {
+                    dispath(updateUserCliente(user))
+                    dispath(deletUserMotora())
+                    navigate('/')
+                    toast.success('Logado com suceeso')
+                }
+                if (user.type === 'Motora') {
+                    dispath(updateUserMotora(user))
+                    dispath(deletUserCliente())
+                    navigate('/')
+                    toast.success('Logado com suceeso')
+                }
+            } catch (error) {
+                const errorMsg = error instanceof FirebaseError && (error.code === AuthErrorCodes.INVALID_PASSWORD || error.code === AuthErrorCodes.USER_DELETED)
+                    ? 'Login ou senha inválidos.'
+                    : 'Falha ao fazer login. Tente novamente.'
+                toast.error(errorMsg)
+            }
         }
     })
     return (
