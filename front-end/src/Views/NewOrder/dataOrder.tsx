@@ -6,18 +6,13 @@ import { ButtonFormUser } from "../../Components/StyledComponets";
 import { EstimatePrice } from "./estimeprice";
 import styled from "styled-components";
 import { AutoCompleteField } from "../../Components/AutoComplet";
-import { Address } from "../../Entites/Address";
 
-type FormValues = {
-    AddresInitial: Address | null
-    AddresFinal: Address | null
-    Description: string
-}
+
 export function DataOrder() {
-    const formik = useFormik<FormValues>({
+    const formik = useFormik({
         initialValues: {
-            AddresInitial: null,
-            AddresFinal: null,
+            AddresInitial: '',
+            AddresFinal: '',
             Description: '',
         },
         validationSchema: yup.object().shape({
@@ -33,22 +28,12 @@ export function DataOrder() {
                 controlId="AddresInitial"
                 label="Endereço de retirada"
                 placeholder="Digite o endereço de retirada"
-                {...formik.getFieldProps('AddresInitial')}
-                error={formik.errors['AddresInitial']}
-                isInvalid={formik.touched['AddresInitial'] && !!formik.errors['AddresInitial']}
-                isValid={formik.touched['AddresInitial'] && !formik.errors['AddresInitial']}
-                onChange={(address) => formik.setFieldValue('AddresInitial', address)}
             />
             <AutoCompleteField
                 controlId="AddresFinal"
                 label="Endereço de entrega"
                 placeholder="Digite o endereço de entrega"
-                {...formik.getFieldProps('AddresFinal')}
-                error={formik.errors['AddresFinal']}
-                isInvalid={formik.touched['AddresFinal'] && !!formik.errors['AddresFinal']}
-                isValid={formik.touched['AddresFinal'] && !formik.errors['AddresFinal']}
-                onChange={(address) => formik.setFieldValue('AddresFinal', address)}
-            />
+            /> 
             <FormFilde
                 controlId="Description"
                 label="insira instruções para o motoboy"
